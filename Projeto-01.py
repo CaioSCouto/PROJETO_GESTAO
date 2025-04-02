@@ -66,11 +66,7 @@ def lista_de_produtos():
         produtos_Tsaida = ctk.CTkCheckBox(lista_Tsaida, text=entrada_informar_nome, border_color="#FFB046",
                                           border_width=2, onvalue=entrada_informar_nome, offvalue="",
                                           variable=check_var,
-<<<<<<< HEAD
                                           command=lambda: lista_selecionados(
-=======
-                                          command=lambda: nome_lista_produtos(
->>>>>>> 7b0081f4bada2cb353f813a5a8346b2f9d23b711
                                               check_var) if check_var.get() else apagar_entradas_Teditar())
         produtos_Tsaida.pack(pady=5, anchor="w")
 

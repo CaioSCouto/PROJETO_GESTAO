@@ -7,8 +7,8 @@ items = ""
 
 # todo---------------------------------------------------TODOS OS DEFS--------------------------------------------------
 
-# Criando banco de dados
-def criar_banco():
+# Criando o nome das colunas da tabela
+def nomes_colunas_tabela():
     conexao = sqlite3.connect("produtos.db")
     terminal_sql = conexao.cursor()
     terminal_sql.execute("CREATE TABLE IF NOT EXISTS produtos("
@@ -20,8 +20,8 @@ def criar_banco():
     conexao.close()
 
 
-# Lendo os dados
-def ler_dados():
+# Criando as colunas da tabela
+def criando_colunas_tabela():
     conexao = sqlite3.connect("produtos.db")
     terminal_sql = conexao.cursor()
     terminal_sql.execute("select * from produtos")
@@ -59,27 +59,27 @@ def lista_de_produtos():
         produtos_Teditar = ctk.CTkCheckBox(lista_produtos_Teditar, text=entrada_informar_nome, border_color="#FFB046",
                                            border_width=2, onvalue=entrada_informar_nome, offvalue="",
                                            variable=check_var,
-                                           command=lambda: selecionar_produto(
+                                           command=lambda: nome_lista_produtos(
                                                check_var) if check_var.get() else apagar_entradas_Teditar())
         produtos_Teditar.pack(pady=5, anchor="w")
 
         produtos_Tsaida = ctk.CTkCheckBox(lista_Tsaida, text=entrada_informar_nome, border_color="#FFB046",
                                           border_width=2, onvalue=entrada_informar_nome, offvalue="",
                                           variable=check_var,
-                                          command=lambda: selecionar_produto(
+                                          command=lambda: nome_lista_produtos(
                                               check_var) if check_var.get() else apagar_entradas_Teditar())
         produtos_Tsaida.pack(pady=5, anchor="w")
 
         produtos_Tentrada = ctk.CTkCheckBox(lista_Tentrada, text=entrada_informar_nome, border_color="#FFB046",
                                             border_width=2, onvalue=entrada_informar_nome, offvalue="",
                                             variable=check_var,
-                                            command=lambda: selecionar_produto(
+                                            command=lambda: nome_lista_produtos(
                                                 check_var) if check_var.get() else apagar_entradas_Teditar())
         produtos_Tentrada.pack(pady=5, anchor="w")
 
 
 # deletar produtos na tela editar
-def deletar_produtos(nome_produto):
+def deletar_produtos_Teditar(nome_produto):
     conexao = sqlite3.connect("produtos.db")
     terminal_sql = conexao.cursor()
     terminal_sql.execute(f"DELETE FROM produtos WHERE nome = '{nome_produto}'")
@@ -105,15 +105,15 @@ def salvar_edicao_produto(nome_produto, preco_produto, descricao_produto):
     lista_de_produtos()
 
 
-# apagando as entry da tela editar
+# apaga as entry da tela editar
 def apagar_entradas_Teditar():
     editar_nome_produto.delete(0, "end")
     editar_preco_produto.delete(0, "end")
     editar_descricao_produto.delete(0.0, "end")
 
 
-# adiciona produto
-def selecionar_produto(entrada_informar_nome):
+# Adiciona produto na lista
+def nome_lista_produtos(entrada_informar_nome):
     global valor_checkbox
     valor_checkbox = entrada_informar_nome.get().strip("(),'\"")
 
@@ -166,13 +166,13 @@ def lista_selecionados():
         produtos_selecionados_Tsaida = ctk.CTkCheckBox(lista_selecionada_Tsaida, text=entrada_informar_nome, border_color="#FFB046",
                                            border_width=2, onvalue=entrada_informar_nome, offvalue="",
                                            variable=check_var,
-                                           command=lambda: selecionar_produto(check_var) if check_var.get() else apagar_entradas_Teditar())
+                                           command=lambda: nome_lista_produtos(check_var) if check_var.get() else apagar_entradas_Teditar())
         produtos_selecionados_Tsaida.pack(pady=5, anchor="w")
 
         produtos_selecionados_Tentrada= ctk.CTkCheckBox(lista_selecionado_Tentrada, text=entrada_informar_nome, border_color="#FFB046",
                                           border_width=2, onvalue=entrada_informar_nome, offvalue="",
                                           variable=check_var,
-                                          command=lambda: selecionar_produto(
+                                          command=lambda: nome_lista_produtos(
                                               check_var) if check_var.get() else apagar_entradas_Teditar())
         produtos_selecionados_Tentrada.pack(pady=5, anchor="w")
 
@@ -243,7 +243,7 @@ def abrir_tela_entrada():
 
 
 def abrir_tela_Restoque():
-    ler_dados()
+    criando_colunas_tabela()
     frame_tela_cadastro.grid_forget()
     frame_editar.grid_forget()
     frame_tela_saida.grid_forget()
@@ -439,7 +439,7 @@ editar_preco_produto = ctk.CTkEntry(frame_editar, placeholder_text="0.00", width
 editar_preco_produto.grid(row=3, column=1, padx=5, pady=0, sticky="wn")
 
 botao_excluir_Teditar = ctk.CTkButton(frame_editar, text="Excluir", fg_color="red", hover_color="#8A0500", width=80,
-                                      command=lambda: deletar_produtos(editar_nome_produto.get()))
+                                      command=lambda: deletar_produtos_Teditar(editar_nome_produto.get()))
 botao_excluir_Teditar.grid(row=5, column=1, padx=5, pady=0, sticky="w")
 
 # Coluna 2\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

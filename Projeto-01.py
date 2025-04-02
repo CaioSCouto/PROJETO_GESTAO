@@ -155,12 +155,6 @@ def lista_selecionados(entrada_informar_nome):
 
     conexao = sqlite3.connect("produtos.db")
     terminal_sql = conexao.cursor()
-<<<<<<< HEAD
-    terminal_sql.execute(f"SELECT * FROM produtos WHERE nome = '{valor_checkbox_selecionados}'")
-    receber_nome_listaSelecionadaos = terminal_sql.fetchall()
-    print(receber_nome_listaSelecionadaos)
-    adicionar_item_Ts_Tent
-=======
     terminal_sql.execute("select nome from produtos")
     receber_nomes_produtos = terminal_sql.fetchall()
 
@@ -186,7 +180,6 @@ def lista_selecionados(entrada_informar_nome):
         produtos_selecionados_Tentrada.pack(pady=5, anchor="w")
 
 
->>>>>>> 7b0081f4bada2cb353f813a5a8346b2f9d23b711
 
 def adicionar_item_Ts_Tent(receber_nome_listaSelecionadaos):
     Label = ctk.CTkLabel(lista_selecionada_Tsaida, text=f"'{receber_nome_listaSelecionadaos[0][0]} {receber_nome_listaSelecionadaos[0][1]}'")

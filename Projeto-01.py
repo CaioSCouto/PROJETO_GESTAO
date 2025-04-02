@@ -66,7 +66,7 @@ def lista_de_produtos():
         produtos_Tsaida = ctk.CTkCheckBox(lista_Tsaida, text=entrada_informar_nome, border_color="#FFB046",
                                           border_width=2, onvalue=entrada_informar_nome, offvalue="",
                                           variable=check_var,
-                                          command=lambda: selecionar_produto(
+                                          command=lambda: lista_selecionados(
                                               check_var) if check_var.get() else apagar_entradas_Teditar())
         produtos_Tsaida.pack(pady=5, anchor="w")
 
@@ -121,7 +121,7 @@ def selecionar_produto(entrada_informar_nome):
     terminal_sql = conexao.cursor()
     terminal_sql.execute(f"SELECT * FROM produtos WHERE nome = '{valor_checkbox}'")
     receber_dados = terminal_sql.fetchall()
-    print(valor_checkbox)
+    print(receber_dados)
 
     editar_nome_produto.delete(0, "end")
     editar_nome_produto.insert(0, receber_dados[0][0])
@@ -147,38 +147,24 @@ def salvar_dados_Tcadastro():
     entrada_informar_nome.delete(0, "end")
     entrada_informar_preco.delete(0, "end")
     descricao_Tcadastro.delete("1.0", "end")
+ 
 
+def lista_selecionados(entrada_informar_nome):
+    global valor_checkbox_selecionados
+    valor_checkbox_selecionados = entrada_informar_nome.get().strip("(),'\"")
 
-def lista_selecionados():
     conexao = sqlite3.connect("produtos.db")
     terminal_sql = conexao.cursor()
-    terminal_sql.execute("select nome from produtos")
-    receber_nomes_produtos = terminal_sql.fetchall()
+    terminal_sql.execute(f"SELECT * FROM produtos WHERE nome = '{valor_checkbox_selecionados}'")
+    receber_nome_listaSelecionadaos = terminal_sql.fetchall()
+    print(receber_nome_listaSelecionadaos)
+    adicionar_item_Ts_Tent
 
-    for widget in lista_selecionada_Tsaida.winfo_children():
-        widget.destroy()
-    for widget in lista_selecionado_Tentrada.winfo_children():
-        widget.destroy()
+def adicionar_item_Ts_Tent(receber_nome_listaSelecionadaos):
+    Label = ctk.CTkLabel(lista_selecionada_Tsaida, text=f"'{receber_nome_listaSelecionadaos[0][0]} {receber_nome_listaSelecionadaos[0][1]}'")
+    Label.pack(pady=5)
 
-    check_var = ctk.StringVar()
-    for i in receber_nomes_produtos:
-        entrada_informar_nome = str(i[0])
-        produtos_selecionados_Tsaida = ctk.CTkCheckBox(lista_selecionada_Tsaida, text=entrada_informar_nome, border_color="#FFB046",
-                                           border_width=2, onvalue=entrada_informar_nome, offvalue="",
-                                           variable=check_var,
-                                           command=lambda: selecionar_produto(check_var) if check_var.get() else apagar_entradas_Teditar())
-        produtos_selecionados_Tsaida.pack(pady=5, anchor="w")
-
-        produtos_selecionados_Tentrada= ctk.CTkCheckBox(lista_selecionado_Tentrada, text=entrada_informar_nome, border_color="#FFB046",
-                                          border_width=2, onvalue=entrada_informar_nome, offvalue="",
-                                          variable=check_var,
-                                          command=lambda: selecionar_produto(
-                                              check_var) if check_var.get() else apagar_entradas_Teditar())
-        produtos_selecionados_Tentrada.pack(pady=5, anchor="w")
-
-
-
-
+        
 def abrir_tela_cadastro():
     frame_editar.grid_forget()
     frame_tela_saida.grid_forget()
@@ -493,14 +479,6 @@ botao_cancelar_Tsaida.grid(row=4, column=1, pady=0, padx=0, sticky="nw")
 lista_selecionada_Tsaida = ctk.CTkScrollableFrame(frame_tela_saida, height=10, width=220)
 lista_selecionada_Tsaida.grid(row=3, column=1, pady=5, padx=0, columnspan=2)
 
-for _ in items:
-    botao_apagar_selecionado = ctk.CTkButton(lista_selecionada_Tsaida, text="X", fg_color="red",
-                                             hover_color="#8A0500", width=20,
-                                             height=20)
-    botao_apagar_selecionado.grid(row=0, column=1, pady=5, padx=0, sticky="e")
-    lista_selecionada_Tsaida.grid_columnconfigure(1, weight=2)
-    box = ctk.CTkCheckBox(lista_selecionada_Tsaida, text=f"{items}", border_color="#FFB046", border_width=2)
-    box.grid(row=0, column=0, pady=5, padx=0, sticky="w")
 
 # Coluna 2\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 botao_add_Tsaida = ctk.CTkButton(frame_tela_saida, text="Adicionar Item", fg_color="#FA0085", hover_color="#290B2D",

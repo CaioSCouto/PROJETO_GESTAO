@@ -411,7 +411,7 @@ botao_salvar_Tcadastro = ctk.CTkButton(frame_tela_cadastro, text="Salvar", hover
                                        fg_color="#FA0085", command=salvar_dados_Tcadastro)
 botao_salvar_Tcadastro.grid(row=4, column=1, padx=5, pady=5, sticky="e")
 
-# todo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# todo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
 # todo--------------------------------------------TELA DE EDITAR--------------------------------------------------------

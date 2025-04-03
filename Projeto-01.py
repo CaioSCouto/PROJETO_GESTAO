@@ -95,8 +95,7 @@ def deletar_produtos_Teditar(nome_produto):
 def salvar_edicao_produto(nome_produto, preco_produto, descricao_produto):
     conexao = sqlite3.connect("produtos.db")
     terminal_sql = conexao.cursor()
-    terminal_sql.execute(
-        f"UPDATE produtos SET nome = '{nome_produto}', preco = '{preco_produto}', descricao = '{descricao_produto}' WHERE nome = '{valor_checkbox}'")
+    terminal_sql.execute(f"UPDATE produtos SET nome = '{nome_produto}', preco = '{preco_produto}', descricao = '{descricao_produto}' WHERE nome = '{valor_checkbox}'")
     conexao.commit()
     conexao.close()
     editar_nome_produto.delete(0, "end")
@@ -150,148 +149,62 @@ def salvar_dados_Tcadastro():
  
 
 def lista_selecionados(entrada_informar_nome):
-    global valor_checkbox_selecionados
-    valor_checkbox_selecionados = entrada_informar_nome.get().strip("(),'\"")
+   global valor_checkbox_Tsaida
+   valor_checkbox_Tsaida = entrada_informar_nome.get().strip("(,'\"")
+   
 
-    conexao = sqlite3.connect("produtos.db")
-    terminal_sql = conexao.cursor()
-    terminal_sql.execute("select nome from produtos")
-    receber_nomes_produtos = terminal_sql.fetchall()
+def botao_lista_selecionados():
+    nome_produtos_selecionados_Tsaida = ctk.CTkLabel(lista_selecionada_Tsaida, text=f"{valor_checkbox_Tsaida:<20}{qtd_retirada_Tsaida.get()}", font=("Courier",13))
+    nome_produtos_selecionados_Tsaida.pack(pady=2,padx=2, anchor="w")
 
-    for widget in lista_selecionada_Tsaida.winfo_children():
-        widget.destroy()
-    for widget in lista_selecionado_Tentrada.winfo_children():
-        widget.destroy()
-
-    check_var = ctk.StringVar()
-    for i in receber_nomes_produtos:
-        entrada_informar_nome = str(i[0])
-        produtos_selecionados_Tsaida = ctk.CTkCheckBox(lista_selecionada_Tsaida, text=entrada_informar_nome, border_color="#FFB046",
-                                           border_width=2, onvalue=entrada_informar_nome, offvalue="",
-                                           variable=check_var,
-                                           command=lambda: nome_lista_produtos(check_var) if check_var.get() else apagar_entradas_Teditar())
-        produtos_selecionados_Tsaida.pack(pady=5, anchor="w")
-
-        produtos_selecionados_Tentrada= ctk.CTkCheckBox(lista_selecionado_Tentrada, text=entrada_informar_nome, border_color="#FFB046",
-                                          border_width=2, onvalue=entrada_informar_nome, offvalue="",
-                                          variable=check_var,
-                                          command=lambda: nome_lista_produtos(
-                                              check_var) if check_var.get() else apagar_entradas_Teditar())
-        produtos_selecionados_Tentrada.pack(pady=5, anchor="w")
-
-
-
-def adicionar_item_Ts_Tent(receber_nome_listaSelecionadaos):
-    Label = ctk.CTkLabel(lista_selecionada_Tsaida, text=f"'{receber_nome_listaSelecionadaos[0][0]} {receber_nome_listaSelecionadaos[0][1]}'")
-    Label.pack(pady=5)
-
-        
-def abrir_tela_cadastro():
-    frame_editar.grid_forget()
-    frame_tela_saida.grid_forget()
-    frame_tela_entrada.grid_forget()
-    frame_tela_relatorio.grid_forget()
-    tela_cadastro.configure(fg_color="#290B2D")
-    tela_editar.configure(fg_color="purple")
-    tela_saida.configure(fg_color="purple")
-    tela_entrada.configure(fg_color="purple")
-    tela_relatorio.configure(fg_color="purple")
-    frame_tela_cadastro.configure(height=380, width=590, fg_color="black", border_color="purple", border_width=2)
-    frame_tela_cadastro.grid_propagate(False)
-    frame_tela_cadastro.grid(row=0, column=1, padx=5, pady=10)
-
-
-def abrir_tela_editar():
-    lista_de_produtos()
+def navegar(frame_tela_Tescolhida):
     frame_tela_cadastro.grid_forget()
-    frame_tela_saida.grid_forget()
-    frame_tela_entrada.grid_forget()
-    frame_tela_relatorio.grid_forget()
-    tela_cadastro.configure(fg_color="purple")
-    tela_editar.configure(fg_color="#290B2D")
-    tela_saida.configure(fg_color="purple")
-    tela_entrada.configure(fg_color="purple")
-    tela_relatorio.configure(fg_color="purple")
-    frame_editar.configure(height=380, width=590, fg_color="black", border_color="purple", border_width=2)
-    frame_editar.grid_propagate(False)
-    frame_editar.grid(row=0, column=1, padx=5, pady=10)
-
-
-def abrir_tela_saida():
-    lista_de_produtos()
-    frame_tela_cadastro.grid_forget()
-    frame_editar.grid_forget()
-    frame_tela_entrada.grid_forget()
-    frame_tela_relatorio.grid_forget()
-    tela_cadastro.configure(fg_color="purple")
-    tela_editar.configure(fg_color="purple")
-    tela_saida.configure(fg_color="#290B2D")
-    tela_entrada.configure(fg_color="purple")
-    tela_relatorio.configure(fg_color="purple")
-    frame_tela_saida.configure(height=380, width=590, fg_color="black", border_color="purple", border_width=2)
-    frame_tela_saida.grid_propagate(False)
-    frame_tela_saida.grid(row=0, column=1, padx=5, pady=10)
-
-
-def abrir_tela_entrada():
-    lista_de_produtos()
-    frame_tela_cadastro.grid_forget()
-    frame_editar.grid_forget()
-    frame_tela_saida.grid_forget()
-    frame_tela_relatorio.grid_forget()
-    tela_cadastro.configure(fg_color="purple")
-    tela_editar.configure(fg_color="purple")
-    tela_saida.configure(fg_color="purple")
-    tela_entrada.configure(fg_color="#290B2D")
-    tela_relatorio.configure(fg_color="purple")
-    frame_tela_entrada.configure(height=380, width=590, fg_color="black", border_color="purple", border_width=2)
-    frame_tela_entrada.grid_propagate(False)
-    frame_tela_entrada.grid(row=0, column=1, padx=5, pady=10)
-
-
-def abrir_tela_Restoque():
-    criando_colunas_tabela()
-    frame_tela_cadastro.grid_forget()
-    frame_editar.grid_forget()
-    frame_tela_saida.grid_forget()
-    frame_tela_entrada.grid_forget()
-    frame_Rsaida.grid_forget()
-    frame_Rentrada.grid_forget()
-
-    tela_cadastro.configure(fg_color="purple")
-    tela_editar.configure(fg_color="purple")
-    tela_saida.configure(fg_color="purple")
-    tela_entrada.configure(fg_color="purple")
-    tela_relatorio.configure(fg_color="#290B2D")
-
-    frame_tela_relatorio.configure(height=380, width=590, fg_color="black", border_color="purple", border_width=2)
-    frame_tela_relatorio.grid_propagate(False)
-    frame_tela_relatorio.grid(row=0, column=1, padx=5, pady=10)
-
-
-def relatorio_saida():
-    frame_tela_cadastro.grid_forget()
-    frame_editar.grid_forget()
+    frame_tela_editar.grid_forget()
     frame_tela_saida.grid_forget()
     frame_tela_entrada.grid_forget()
     frame_tela_relatorio.grid_forget()
     frame_Rentrada.grid_forget()
-    frame_Rsaida.configure(height=380, width=590, fg_color="black", border_color="purple", border_width=2)
-    frame_Rsaida.grid_propagate(False)
-    frame_Rsaida.grid(row=0, column=1, padx=5, pady=10)
+    frame_Rsaida.grid_forget()
 
 
-def relatorio_entrada():
-    frame_tela_cadastro.grid_forget()
-    frame_editar.grid_forget()
-    frame_tela_saida.grid_forget()
-    frame_tela_entrada.grid_forget()
-    frame_Rsaida.grid_forget()
-    frame_tela_relatorio.grid_forget()
-    frame_Rsaida.grid_forget()
-    frame_Rentrada.configure(height=380, width=590, fg_color="black", border_color="purple", border_width=2)
-    frame_Rentrada.grid_propagate(False)
-    frame_Rentrada.grid(row=0, column=1, padx=5, pady=10)
+    frame_tela_Tescolhida.configure(height=380, width=590, fg_color="black", border_color="purple", border_width=2)
+    frame_tela_Tescolhida.grid_propagate(False)
+    frame_tela_Tescolhida.grid(row=0, column=1, padx=5, pady=5)
+     
+    if frame_tela_Tescolhida == frame_tela_cadastro:
+        tela_cadastro.configure(fg_color="#290B2D")
+        tela_editar.configure(fg_color="purple")
+        tela_saida.configure(fg_color="purple")
+        tela_entrada.configure(fg_color="purple")
+        tela_relatorio.configure(fg_color="purple")
+    elif frame_tela_Tescolhida == frame_tela_editar:
+        lista_de_produtos()
+        tela_cadastro.configure(fg_color="purple")
+        tela_editar.configure(fg_color="#290B2D")
+        tela_saida.configure(fg_color="purple")
+        tela_entrada.configure(fg_color="purple")
+        tela_relatorio.configure(fg_color="purple")
+    elif frame_tela_Tescolhida == frame_tela_saida:
+        lista_de_produtos()
+        tela_cadastro.configure(fg_color="purple")
+        tela_editar.configure(fg_color="purple")
+        tela_saida.configure(fg_color="#290B2D")
+        tela_entrada.configure(fg_color="purple")
+        tela_relatorio.configure(fg_color="purple")
+    elif frame_tela_Tescolhida == frame_tela_entrada:
+        lista_de_produtos()
+        tela_cadastro.configure(fg_color="purple")
+        tela_editar.configure(fg_color="purple")
+        tela_saida.configure(fg_color="purple")
+        tela_entrada.configure(fg_color="#290B2D")
+        tela_relatorio.configure(fg_color="purple")
+    elif frame_tela_Tescolhida == frame_tela_relatorio:
+        criando_colunas_tabela()
+        tela_cadastro.configure(fg_color="purple")
+        tela_editar.configure(fg_color="purple")
+        tela_saida.configure(fg_color="purple")
+        tela_entrada.configure(fg_color="purple")
+        tela_relatorio.configure(fg_color="#290B2D")
 
 
 def exportar():
@@ -339,7 +252,7 @@ def exportar():
 
 
 # todo-------------------------------------------TELA DE MENU-----------------------------------------------------------
-criar_banco()
+nomes_colunas_tabela()
 janela = ctk.CTk()
 janela.geometry("800x400")
 ctk.set_default_color_theme("blue")
@@ -357,22 +270,22 @@ frame_menu.grid(row=0, column=0, padx=5, pady=10)
 titulo = ctk.CTkLabel(frame_menu, text="Nome do\nsistema", font=("Arial", 20, "bold"), )
 titulo.pack(pady=20)
 
-tela_cadastro = ctk.CTkButton(frame_menu, text="Cadastro", command=abrir_tela_cadastro, fg_color="purple",
+tela_cadastro = ctk.CTkButton(frame_menu, text="Cadastro", command=lambda: navegar(frame_tela_cadastro), fg_color="purple",
                               hover_color="#290B2D")
 tela_cadastro.pack(pady=5)
 
-tela_editar = ctk.CTkButton(frame_menu, text="Editar", command=abrir_tela_editar, fg_color="purple",
+tela_editar = ctk.CTkButton(frame_menu, text="Editar", command=lambda: navegar(frame_tela_editar), fg_color="purple",
                             hover_color="#290B2D")
 tela_editar.pack(pady=5)
 
-tela_saida = ctk.CTkButton(frame_menu, text="Saida", command=abrir_tela_saida, fg_color="purple", hover_color="#290B2D")
+tela_saida = ctk.CTkButton(frame_menu, text="Saida", command=lambda: navegar(frame_tela_saida), fg_color="purple", hover_color="#290B2D")
 tela_saida.pack(pady=5)
 
-tela_entrada = ctk.CTkButton(frame_menu, text="Entrada", command=abrir_tela_entrada, fg_color="purple",
+tela_entrada = ctk.CTkButton(frame_menu, text="Entrada", command=lambda: navegar(frame_tela_entrada), fg_color="purple",
                              hover_color="#290B2D")
 tela_entrada.pack(pady=5)
 
-tela_relatorio = ctk.CTkButton(frame_menu, text="Relatorio", command=abrir_tela_Restoque, fg_color="purple",
+tela_relatorio = ctk.CTkButton(frame_menu, text="Relatorio", command=lambda: navegar(frame_tela_relatorio), fg_color="purple",
                                hover_color="#290B2D")
 tela_relatorio.pack(pady=5)
 # todo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -416,19 +329,19 @@ botao_salvar_Tcadastro.grid(row=4, column=1, padx=5, pady=5, sticky="e")
 
 # todo--------------------------------------------TELA DE EDITAR--------------------------------------------------------
 # Frame
-frame_editar = ctk.CTkFrame(frame_fundo_tela, height=380, width=590, fg_color="black", border_color="purple",
+frame_tela_editar = ctk.CTkFrame(frame_fundo_tela, height=380, width=590, fg_color="black", border_color="purple",
                             border_width=2)
-frame_editar.grid_propagate(False)
+frame_tela_editar.grid_propagate(False)
 
 # Cod da Tela
 # Coluna 0\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-Titulo_Teditar = ctk.CTkLabel(frame_editar, text="Editar Produto Cadastrado", font=("", 20, "bold"))
+Titulo_Teditar = ctk.CTkLabel(frame_tela_editar, text="Editar Produto Cadastrado", font=("", 20, "bold"))
 Titulo_Teditar.grid(row=0, column=0, padx=5, pady=20, columnspan=5)
 
-busca_Teditar = ctk.CTkEntry(frame_editar, placeholder_text="Buscar Produto:", width=300)
+busca_Teditar = ctk.CTkEntry(frame_tela_editar, placeholder_text="Buscar Produto:", width=300)
 busca_Teditar.grid(row=1, column=0, padx=5, pady=10, columnspan=2, sticky="w")
 
-lista_produtos_Teditar = ctk.CTkScrollableFrame(frame_editar, height=200, width=160)
+lista_produtos_Teditar = ctk.CTkScrollableFrame(frame_tela_editar, height=200, width=160)
 lista_produtos_Teditar.grid(row=2, column=0, pady=10, padx=20, rowspan=4, )
 
 for item in items:
@@ -436,26 +349,26 @@ for item in items:
     box.pack(pady=5, padx=0)
 
 # Coluna 1\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-editar_descricao_produto = ctk.CTkTextbox(frame_editar, height=100, width=300)
+editar_descricao_produto = ctk.CTkTextbox(frame_tela_editar, height=100, width=300)
 editar_descricao_produto.grid(row=4, column=1, padx=5, pady=0, sticky="n", columnspan=3)
 
-editar_nome_produto = ctk.CTkEntry(frame_editar, placeholder_text="Nome do Produto", width=300)
+editar_nome_produto = ctk.CTkEntry(frame_tela_editar, placeholder_text="Nome do Produto", width=300)
 editar_nome_produto.grid(row=2, column=1, padx=5, pady=0, sticky="n", columnspan=3)
 
-editar_preco_produto = ctk.CTkEntry(frame_editar, placeholder_text="0.00", width=80)
+editar_preco_produto = ctk.CTkEntry(frame_tela_editar, placeholder_text="0.00", width=80)
 editar_preco_produto.grid(row=3, column=1, padx=5, pady=0, sticky="wn")
 
-botao_excluir_Teditar = ctk.CTkButton(frame_editar, text="Excluir", fg_color="red", hover_color="#8A0500", width=80,
+botao_excluir_Teditar = ctk.CTkButton(frame_tela_editar, text="Excluir", fg_color="red", hover_color="#8A0500", width=80,
                                       command=lambda: deletar_produtos_Teditar(editar_nome_produto.get()))
 botao_excluir_Teditar.grid(row=5, column=1, padx=5, pady=0, sticky="w")
 
 # Coluna 2\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-botao_cancelar_Teditar = ctk.CTkButton(frame_editar, text="Cancelar", width=80, fg_color="#FA0085",
+botao_cancelar_Teditar = ctk.CTkButton(frame_tela_editar, text="Cancelar", width=80, fg_color="#FA0085",
                                        hover_color="#290B2D")
 botao_cancelar_Teditar.grid(row=5, column=2, padx=5, pady=0)
 
 # Coluna 3\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-botao_salvar_Teditar = ctk.CTkButton(frame_editar, text="Salvar", width=80, fg_color="#FA0085",
+botao_salvar_Teditar = ctk.CTkButton(frame_tela_editar, text="Salvar", width=80, fg_color="#FA0085",
                                      hover_color="#290B2D",
                                      command=lambda: salvar_edicao_produto((editar_nome_produto.get()),
                                                                            (editar_preco_produto.get()),
@@ -503,11 +416,14 @@ lista_selecionada_Tsaida.grid(row=3, column=1, pady=5, padx=0, columnspan=2)
 
 # Coluna 2\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 botao_add_Tsaida = ctk.CTkButton(frame_tela_saida, text="Adicionar Item", fg_color="#FA0085", hover_color="#290B2D",
-                                 width=130)
+                                 width=130, command=botao_lista_selecionados)
 botao_add_Tsaida.grid(row=2, column=2, padx=0, pady=0, sticky="n")
 
 botao_salvar_Tsaida = ctk.CTkButton(frame_tela_saida, text="Salvar", fg_color="#FA0085", hover_color="#290B2D",
-                                    width=80)
+                                    width=80,command=lambda:salvar_edicao_produto((editar_nome_produto.get()),
+                                                                           (editar_preco_produto.get()),
+                                                                           (qtd_retirada_Tsaida.get()),
+                                                                           (editar_descricao_produto.get(0.0, "end"))))
 botao_salvar_Tsaida.grid(row=4, column=2, pady=0, padx=0, sticky="en")
 # todo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -627,12 +543,12 @@ botao_estoque_Restoque.configure(fg_color="#290B2D")
 
 # Coluna 3\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 botao_saida_Restoque = ctk.CTkButton(frame_tela_relatorio, text="Saida", width=80, fg_color="#FA0085",
-                                     hover_color="#290B2D", command=relatorio_saida)
+                                     hover_color="#290B2D", command=lambda:navegar(frame_Rsaida))
 botao_saida_Restoque.grid(row=3, column=3, padx=0, pady=5)
 
 # Coluna 4\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 botao_entrada_Restoque = ctk.CTkButton(frame_tela_relatorio, text="Entrada", width=80, fg_color="#FA0085",
-                                       hover_color="#290B2D", command=relatorio_entrada)
+                                       hover_color="#290B2D", command=lambda:navegar(frame_Rentrada))
 botao_entrada_Restoque.grid(row=3, column=4, padx=10, pady=5, sticky="w")
 
 botao_exportar_Restoque = ctk.CTkButton(frame_tela_relatorio, text="Exportar", width=80, fg_color="#458A00",
@@ -700,7 +616,7 @@ barra_pesquisa_Rsaida.grid(row=1, column=1, padx=0, pady=5)
 # Coluna 2 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 botao_estoque_Rsaida = ctk.CTkButton(frame_Rsaida, text="Estoque", width=80, fg_color="#FA0085",
-                                     hover_color="#290B2D", command=abrir_tela_Restoque)
+                                     hover_color="#290B2D", command=lambda:navegar(frame_tela_relatorio))
 botao_estoque_Rsaida.grid(row=3, column=2, padx=10, pady=5, sticky="e")
 
 # Coluna 3\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -710,7 +626,7 @@ botao_saida_Rsaida.grid(row=3, column=3, padx=0, pady=5)
 
 # Coluna 4\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 botao_entrada_Rsaida = ctk.CTkButton(frame_Rsaida, text="Entrada", width=80, fg_color="#FA0085",
-                                     hover_color="#290B2D", command=relatorio_entrada)
+                                     hover_color="#290B2D", command=lambda:navegar(frame_Rentrada))
 botao_entrada_Rsaida.grid(row=3, column=4, padx=10, pady=5, sticky="w")
 
 botao_exportar_Rsaida = ctk.CTkButton(frame_Rsaida, text="Exportar", width=80, fg_color="#458A00",
@@ -776,12 +692,12 @@ barra_pesquisa_Rentrada.grid(row=1, column=1, padx=0, pady=5)
 
 # Coluna 2 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 botao_estoque_Rentrada = ctk.CTkButton(frame_Rentrada, text="Estoque", width=80, fg_color="#FA0085",
-                                       hover_color="#290B2D", command=abrir_tela_Restoque)
+                                       hover_color="#290B2D", command=lambda:navegar(frame_tela_relatorio))
 botao_estoque_Rentrada.grid(row=3, column=2, padx=10, pady=5, sticky="e")
 
 # Coluna 3\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 botao_saida_Rentrada = ctk.CTkButton(frame_Rentrada, text="Saida", width=80, fg_color="#FA0085",
-                                     hover_color="#290B2D", command=relatorio_saida)
+                                     hover_color="#290B2D", command=lambda:navegar(frame_Rsaida))
 botao_saida_Rentrada.grid(row=3, column=3, padx=0, pady=5)
 
 # Coluna 4\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

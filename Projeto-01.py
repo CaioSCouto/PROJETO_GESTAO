@@ -165,20 +165,27 @@ def botaoSALVAR_lista_selecionados(operacao):
     nome = []
     quantidade_Tsaida= []
     quantidade_Tentrada = []
-
+    
     nome.append(valor_checkbox_lista_selecionados) 
     quantidade_Tsaida.append(qtd_retirada_Tsaida.get())
     quantidade_Tentrada.append(qtd_entrando_Tentrada.get())
+
 
 
     conexao = sqlite3.connect("produtos.db")
     terminal_sql = conexao.cursor()
 
     for i in range(len(nome)):
+        print(f"Tipo quantidade_Tsaida: {type(quantidade_Tsaida[i])}, valor:{quantidade_Tsaida[i]}")
+        print(f"Tipo nome: {type(nome[i])}, valor: {nome[i]}")
+
+        quantidadeTentrada = int(quantidade_Tentrada[i])
+        nome = int(nome[i])
+        print (f"Nome: {nome[i]}, Saida:{quantidade_Tsaida[i]}, Entrada:{quantidade_Tentrada[i]}")
         if operacao == frame_tela_saida:
-            terminal_sql.execute(f"UPDATE produtos SET quantidade = - ? WHERE nome =?", (quantidade_Tsaida[i],nome[i]))
+            terminal_sql.execute(f"UPDATE produtos SET quantidade = quantidade - ? WHERE nome =?", (int(quantidade_Tsaida[i]),str(nome[i])))
         elif operacao == frame_tela_entrada:
-            terminal_sql.execute(f"UPDATE produtos SET quantidade = + ? WHERE nome =?", (quantidade_Tentrada[i],nome[i]))
+            terminal_sql.execute(f"UPDATE produtos SET quantidade = quantidade + ? WHERE nome =?", (int(quantidade_Tentrada[i]),str(nome[i])))
    
     conexao.commit()
     conexao.close()
